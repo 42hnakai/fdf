@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 17:44:47 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/24 19:40:14 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/08/26 20:51:13 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ int main(void)
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	map_info = get_map_info();
+	// printf("%d\n",map_info[2][3].z_axis);
 	// put dot
-	while (map_info[i][j].z_axis != '\n')
-	{
-		my_mlx_pixel_put(&img, map_info[i][j].x_axis, map_info[i][j].y_axis, 0x00FF0000);
-		i++;
-		j++;
-	}
+	// while (&map_info[i][j] != NULL)
+	// {
+	// 	while (&map_info[i][j] != NULL)
+	// 	{
+	// 		my_mlx_pixel_put(&img, map_info[i][j].x_axis, map_info[i][j].y_axis, 0x00FF0000);
+	// 		i++;
+	// 	}
+	// 	j++;
+	// }
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);
