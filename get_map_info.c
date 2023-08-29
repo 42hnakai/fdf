@@ -6,13 +6,32 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/27 18:00:41 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/08/29 22:16:27 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map_info **get_z_axis(t_map_info **map_info, char *line, int y_axis)
+void get_xy(t_map_info **map_info, t_map_size map_size)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < map_size.y_length)
+	{
+		x = 0;
+		while (x < map_size.x_length)
+		{
+			map_info[y][x].x = x;
+			map_info[y][x].y = y;
+			x++;
+		}
+		y++;
+	}
+}
+
+t_map_info **get_z(t_map_info **map_info, char *line, int y_axis)
 {
 	int i;
 	char **splits;
@@ -21,7 +40,7 @@ t_map_info **get_z_axis(t_map_info **map_info, char *line, int y_axis)
 	splits = ft_split(line, ' ');
 	while (splits[i] != NULL)
 	{
-		map_info[y_axis][i].z_axis = ft_atoi(&splits[i][0]);
+		map_info[y_axis][i].z = ft_atoi(&splits[i][0]);
 		i++;
 	}
 	return (map_info);
@@ -83,7 +102,7 @@ t_map_size get_map_size()
 	return (map_size);
 }
 
-t_map_info **get_map_info(t_map_info **map_info)
+t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size)
 {
 	int fd;
 	int y_axis;
@@ -93,9 +112,10 @@ t_map_info **get_map_info(t_map_info **map_info)
 	// MALLOC MAP_INFO
 	fd = open("10-2.fdf", O_RDONLY);
 	// GET EVERY LINE TO LINE
+	get_xy(map_info, map_size);
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		get_z_axis(map_info, line, y_axis);
+		get_z(map_info, line, y_axis);
 		free(line);
 		y_axis++;
 	}
