@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:37:15 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/29 23:45:54 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:38:51 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ typedef struct s_line_params
 	double intercept;
 } t_line_params;
 
+// X VECTOR
+typedef struct s_x_vector
+{
+	double new_x;
+	double new_y;
+} t_x_vector;
+
+// Y VECTOR
+typedef struct s_y_vector
+{
+	double new_x;
+	double new_y;
+} t_y_vector;
+
 // about minilibx
 typedef struct s_data
 {
@@ -55,12 +69,12 @@ typedef struct s_data
 } t_data;
 
 // GET_MAP_INFO FILE
-t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size);
+t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name);
 t_map_info **malloc_map_info(t_map_size map_size);
 void get_xy(t_map_info **map_info, t_map_size map_size);
 t_map_info **get_z(t_map_info **map_info, char *line, int y_axis);
 int get_x_length(char *line);
-t_map_size get_map_size();
+t_map_size get_map_size(char *file_name);
 
 // DROWLINE
 void drowline(double x1, double x2, double y1, double y2, t_data img);

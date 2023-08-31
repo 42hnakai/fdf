@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/29 22:16:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:50:39 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,23 @@ t_map_info **get_z(t_map_info **map_info, char *line, int y_axis)
 	splits = ft_split(line, ' ');
 	while (splits[i] != NULL)
 	{
-		map_info[y_axis][i].z = ft_atoi(&splits[i][0]);
+		map_info[y_axis][i].z = ft_atoi(splits[i]);
+		i++;
+	}
+	return (map_info);
+}
+
+t_map_info **get_color(t_map_info **map_info, char *line, int y_axis)
+{
+	int i;
+	char **splits;
+
+	i = 0;
+	splits = ft_split(line, ' ');
+	while (splits[i] != NULL)
+	{
+		split(splits[i],',');
+		map_info[y_axis][i].color = ft_atoi(&splits[i]);
 		i++;
 	}
 	return (map_info);
@@ -55,7 +71,7 @@ int get_x_length(char *line)
 	splits = ft_split(line, ' ');
 	while (splits[x_length] != NULL)
 		x_length++;
-	return (x_length - 1); // EXCEPT NEWLINE
+	return (x_length); // EXCEPT NEWLINE
 }
 
 // MALLOC MAP_INFO
@@ -75,14 +91,14 @@ t_map_info **malloc_map_info(t_map_size map_size)
 }
 
 // GET MAP SIZE(X_LENGTH, Y_LENGTH)
-t_map_size get_map_size()
+t_map_size get_map_size(char *file_name)
 {
 	int fd;
 	t_map_size map_size;
 	char *line;
 
 	map_size.y_length = 0;
-	fd = open("10-2.fdf", O_RDONLY);
+	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");
@@ -102,7 +118,7 @@ t_map_size get_map_size()
 	return (map_size);
 }
 
-t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size)
+t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name)
 {
 	int fd;
 	int y_axis;
@@ -110,7 +126,7 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size)
 
 	y_axis = 0;
 	// MALLOC MAP_INFO
-	fd = open("10-2.fdf", O_RDONLY);
+	fd = open(file_name, O_RDONLY);
 	// GET EVERY LINE TO LINE
 	get_xy(map_info, map_size);
 	while ((line = get_next_line(fd)) != NULL)
