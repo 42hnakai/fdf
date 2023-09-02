@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:37:15 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/31 20:38:51 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/02 13:08:48 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_map_info
 	double x;
 	double y;
 	double z;
-	double color;
+	int color;
 } t_map_info;
 
 // SIZE OF MAP

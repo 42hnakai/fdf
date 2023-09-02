@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakai <hnakai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 00:02:03 by hnakai            #+#    #+#             */
-/*   Updated: 2023/06/10 02:11:58 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/02 13:19:11 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 	count = 0;
 	if (dstsize == 0)
-		return (ft_strlen(src));
+		return (ft_strlen1(src));
 	if (src == NULL)
 		return (0);
 	while (count + 1 < dstsize && src[count] != '\0')
@@ -27,7 +27,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		count++;
 	}
 	dst[count] = '\0';
-	return (ft_strlen(src));
+	return (ft_strlen1(src));
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -37,7 +37,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	len_s = ft_strlen(s);
+	len_s = ft_strlen1(s);
 	if (start >= len_s)
 	{
 		a = (char *)malloc(sizeof(char));
@@ -55,7 +55,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (a);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen1(const char *str)
 {
 	size_t	len;
 
@@ -83,14 +83,14 @@ char	*ft_strjoin(char *s1, char *s2)
 		free(s1);
 		return (NULL);
 	}
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen1(s1) + ft_strlen1(s2) + 1));
 	if (!str)
 	{
 		free(s1);
 		return (NULL);
 	}
-	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
-	ft_strlcpy(str + ft_strlen(s1), s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	ft_strlcpy(str, s1, ft_strlen1(s1) + 1);
+	ft_strlcpy(str + ft_strlen1(s1), s2, ft_strlen1(s1) + ft_strlen1(s2) + 1);
 	free(s1);
 	return (str);
 }

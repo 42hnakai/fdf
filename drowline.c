@@ -6,12 +6,13 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/31 20:36:50 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/02 13:49:42 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// WANT TO CHANGE FUNC NAME TO "GET_LINE_PARAMS"
 t_line_params make_line_wq(double x1, double x2, double y1, double y2)
 {
 	double diff_x;
@@ -25,14 +26,14 @@ t_line_params make_line_wq(double x1, double x2, double y1, double y2)
 	return (line_params);
 }
 
-int get_y(int x, t_line_params line_params)
-{
-	return ((int)(line_params.slope * x + line_params.intercept));
-}
-
 int get_x(int y, t_line_params line_params)
 {
 	return ((int)((y - line_params.intercept) / line_params.slope));
+}
+
+int get_y(int x, t_line_params line_params)
+{
+	return ((int)(line_params.slope * x + line_params.intercept));
 }
 
 void ft_swap(double *a, double *b)

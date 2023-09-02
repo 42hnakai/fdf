@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakai <hnakai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 00:06:58 by hnakai            #+#    #+#             */
-/*   Updated: 2023/01/20 14:20:38 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/02 13:19:25 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_make_buff(char *save, int fd);
 char	*ft_make_save(char *buff);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *str);
+size_t	ft_strlen1(const char *str);
 char	*ft_strjoin(char *s1, char *s2);
 
 #endif

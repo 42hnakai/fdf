@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/31 20:50:39 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/02 13:45:12 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,59 @@ void get_xy(t_map_info **map_info, t_map_size map_size)
 t_map_info **get_z(t_map_info **map_info, char *line, int y_axis)
 {
 	int i;
-	char **splits;
+	char **info;
+	char **z;
 
 	i = 0;
-	splits = ft_split(line, ' ');
-	while (splits[i] != NULL)
+	info = ft_split(line, ' ');
+	while (info[i] != NULL)
 	{
-		map_info[y_axis][i].z = ft_atoi(splits[i]);
+		z = ft_split(info[i], ',');
+		map_info[y_axis][i].z = ft_atoi(z[0]);
 		i++;
 	}
 	return (map_info);
 }
 
+int hex_to_bin(char *hex)
+{
+	int bin;
+	int len;
+	int i;
+
+	i = 0;
+	len = ft_strlen(hex);
+	bin = 0;
+	while (hex[(len - 1) - i] != 'x')
+	{
+		if ('0' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= '9')
+		{
+			bin += pow(16, i) * (hex[(len - 1) - i] - '0');
+		}
+		else if ('A' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= 'F')
+		{
+			bin += pow(16, i) * (hex[(len - 1) - i] - 55);
+		}
+		i++;
+	}
+	printf("%X\n", bin);
+	return (bin);
+}
+
 t_map_info **get_color(t_map_info **map_info, char *line, int y_axis)
 {
 	int i;
-	char **splits;
+	char **info;
+	char **color;
 
 	i = 0;
-	splits = ft_split(line, ' ');
-	while (splits[i] != NULL)
+	info = ft_split(line, ' ');
+	while (info[i] != NULL)
 	{
-		split(splits[i],',');
-		map_info[y_axis][i].color = ft_atoi(&splits[i]);
+		color = ft_split(info[i], ',');
+		if (color[1] != NULL)
+			map_info[y_axis][i].color = hex_to_bin(color[1]);
+		// printf("color : %s\n",map_info[y_axis][i].color);
 		i++;
 	}
 	return (map_info);
@@ -132,6 +162,7 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		get_z(map_info, line, y_axis);
+		get_color(map_info, line, y_axis);
 		free(line);
 		y_axis++;
 	}
