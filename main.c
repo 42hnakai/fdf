@@ -6,68 +6,65 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 17:44:47 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/31 20:38:04 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/04 23:52:51 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	char *dst;
+	char	*dst;
 
-	if ((x < 0 || 1920 < x) || (y < 0 || 1080 < y))
-		printf("[!ERROR!] over map!\n");
+	// if ((x < 0 || 1920 < x) || (y < 0 || 1080 < y))
+	// 	return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-int main(int argc, char *argv[])
+void	draw_fdf(char *file_name, t_data img)
 {
-	void *mlx;
-	void *mlx_win;
-	t_data img;
-	t_map_info **map_info;
-	t_map_size map_size;
-	int x;
-	int y;
+	int			x;
+	int			y;
+	t_map_info	**map_info;
+	t_map_size	map_size;
 
 	x = 0;
 	y = 0;
-	if (argc != 2)
-		return (0);
-
-	//.fdfファイル以外を彈く
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	map_size = get_map_size(argv[1]);
+	map_size = get_map_size(file_name);
 	map_info = malloc_map_info(map_size);
-	map_info = get_map_info(map_info, map_size,argv[1]);
+	map_info = get_map_info(map_info, map_size, file_name);
 	map_info = get_map_vector(map_info, map_size);
-	// PLOT
 	while (y < map_size.y_length)
-	{
-		x = 0;
-		while (x + 1 < map_size.x_length)
-		{
-			drowline(500 + 20 * map_info[y][x].x, 500 + 20 * map_info[y][x + 1].x, 500 + 20 * map_info[y][x].y, 500 + 20 * map_info[y][x + 1].y, img);
-			x++;
-		}
-		y++;
-	}
-	y = 0;
-	while (y + 1 < map_size.y_length)
 	{
 		x = 0;
 		while (x < map_size.x_length)
 		{
-			drowline(500 + 20 * map_info[y][x].x, 500 + 20 * map_info[y + 1][x].x, 500 + 20 * map_info[y][x].y, 500 + 20 * map_info[y + 1][x].y, img);
+			if (x + 1 < map_size.x_length)
+				drawline(map_info[y][x], map_info[y][x + 1], img);
+			if (y + 1 < map_size.y_length)
+				drawline(map_info[y][x], map_info[y + 1][x], img);
 			x++;
 		}
 		y++;
 	}
+}
+
+int	main(int argc, char *argv[])
+{
+	void	*mlx;
+	void	*mlx_win;
+	t_data	img;
+
+	if (argc != 2)
+		return (0);
+	//.fdfファイル以外を彈く
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(mlx, 1920, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+			&img.line_length, &img.endian);
+	draw_fdf(argv[1], img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);

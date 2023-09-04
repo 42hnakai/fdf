@@ -6,25 +6,25 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:38:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/08/31 20:41:11 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/04 22:11:27 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map_info **get_map_vector(t_map_info **map_info, t_map_size map_size)
+t_map_info	**get_map_vector(t_map_info **map_info, t_map_size map_size)
 {
-	int x;
-	int y;
-	t_x_vector x_vector;
-	t_y_vector y_vector;
+	int			x;
+	int			y;
+	t_x_vector	x_vector;
+	t_y_vector	y_vector;
 
 	x = 0;
 	y = 0;
-	x_vector.new_x = sqrt(pow(map_info[0][1].x, 2) + pow(map_info[0][1].y, 2)) * cos(30 * M_PI / 180);
-	x_vector.new_y = sqrt(pow(map_info[0][1].x, 2) + pow(map_info[0][1].y, 2)) * sin(30 * M_PI / 180);
-	y_vector.new_x = -sqrt(pow(map_info[0][1].x, 2) + pow(map_info[0][1].y, 2)) * cos(30 * M_PI / 180);
-	y_vector.new_y = sqrt(pow(map_info[0][1].x, 2) + pow(map_info[0][1].y, 2)) * sin(30 * M_PI / 180);
+	x_vector.new_x = map_info[0][1].x * cos(30 * M_PI / 180);
+	x_vector.new_y = map_info[0][1].x * sin(30 * M_PI / 180);
+	y_vector.new_x = -map_info[1][0].y * cos(30 * M_PI / 180);
+	y_vector.new_y = map_info[1][0].y * sin(30 * M_PI / 180);
 	while (y < map_size.y_length)
 	{
 		x = 0;

@@ -6,13 +6,13 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/02 13:45:12 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/04 23:44:27 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void get_xy(t_map_info **map_info, t_map_size map_size)
+void get_x_y(t_map_info **map_info, t_map_size map_size)
 {
 	int x;
 	int y;
@@ -69,7 +69,6 @@ int hex_to_bin(char *hex)
 		}
 		i++;
 	}
-	printf("%X\n", bin);
 	return (bin);
 }
 
@@ -86,7 +85,8 @@ t_map_info **get_color(t_map_info **map_info, char *line, int y_axis)
 		color = ft_split(info[i], ',');
 		if (color[1] != NULL)
 			map_info[y_axis][i].color = hex_to_bin(color[1]);
-		// printf("color : %s\n",map_info[y_axis][i].color);
+		else
+			map_info[y_axis][i].color = hex_to_bin("0xFFFFFF");
 		i++;
 	}
 	return (map_info);
@@ -99,7 +99,7 @@ int get_x_length(char *line)
 
 	x_length = 0;
 	splits = ft_split(line, ' ');
-	while (splits[x_length] != NULL)
+	while (splits[x_length] != NULL && ft_strncmp(splits[x_length], "\n", 1) != 0)
 		x_length++;
 	return (x_length); // EXCEPT NEWLINE
 }
@@ -158,7 +158,7 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file
 	// MALLOC MAP_INFO
 	fd = open(file_name, O_RDONLY);
 	// GET EVERY LINE TO LINE
-	get_xy(map_info, map_size);
+	get_x_y(map_info, map_size);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		get_z(map_info, line, y_axis);

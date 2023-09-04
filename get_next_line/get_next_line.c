@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnakai <hnakai@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 00:59:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/06/10 11:01:54 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/04 18:18:25 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_make_save(char *buff)
 	char	*save;
 	size_t	new_len;
 
-	new_len = ft_strlen(buff) - ft_count(buff) - 1;
+	new_len = ft_strlen1(buff) - ft_count(buff) - 1;
 	save = ft_substr(buff, ft_count(buff) + 1, new_len);
 	free(buff);
 	if (!save || !save[0])
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 	if (!buff)
 		return (NULL);
 	save = NULL;
-	while (ft_count(buff) == ft_strlen(buff))
+	while (ft_count(buff) == ft_strlen1(buff))
 	{
 		line = ft_strjoin(line, buff);
 		buff = ft_readbuff(buff, fd);
