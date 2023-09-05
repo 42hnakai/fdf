@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:57:39 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 14:49:49 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 18:51:09 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,59 @@ int check_valid_size(char *file_name)
 	return (0);
 }
 
+int check_valid_z(char *line)
+{
+	int i;
+	char **info;
+	char **z;
+
+	i = 0;
+	info = ft_split(line, ' ');
+	while (info[i] != NULL && info[i][0] != '\0')
+	{
+		z = ft_split(info[i], ',');
+		if (ft_strncmp(z[0], "0", ft_strlen(z[0])) != 0 && ft_atoi(z[0]) == 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 int check_valid_color(char *line)
 {
 	int i;
+	int j;
+	int k;
 	char **info;
 	char **color;
 
 	i = 0;
+	k = 0;
+	if (line[ft_strlen(line) - 1] == ',')
+		return (-1);
 	info = ft_split(line, ' ');
 	while (info[i] != NULL)
 	{
 		color = ft_split(info[i], ',');
+
 		if (color[1] != NULL)
 		{
-			printf("PASS\n");
 			if (!(color[1][0] == '0' && color[1][1] == 'x'))
+				return (-1);
+			while (color[k] != NULL)
+				k++;
+			if (k != 2)
 				return (-1);
 			if (ft_strlen(color[1]) > 8)
 				return (-1);
+			j = 2;
+			while (color[1][j] != '\0')
+			{
+				if (!(('0' <= color[1][j] && color[1][j] <= '9') || ('a' <= color[1][j] && color[1][j] <= 'f') ||
+					  ('A' <= color[1][j] && color[1][j] <= 'F')))
+					return (-1);
+				j++;
+			}
 		}
 		i++;
 	}
@@ -105,13 +140,21 @@ int check_valid_map(char *file_name)
 	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
+		line = ft_strtrim(line,"\n");
 		if (check_valid_color(line) == -1)
 		{
 			free(line);
 			printf("[ERROR!] invalid color\n");
 			return (-1);
 		}
-		free(line);
+		else if (check_valid_z(line) == -1)
+		{
+			free(line);
+			printf("[ERROR!] invalid z\n");
+			return (-1);
+		}
+		else
+			free(line);
 	}
 	// CLOSE FD
 	if (close(fd) == -1)

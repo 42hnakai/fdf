@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:37:15 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 14:22:57 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 19:00:10 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int				add_col(t_color_elem color_diff, double percent);
 
 //UTILS.c
 void			free_double(t_map_info **map_info, int i);
-
+int				display_error(char *massage);
 // MAIN FILE
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 

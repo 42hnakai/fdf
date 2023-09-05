@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/04 23:50:11 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 19:12:10 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_data img)
 	t_color_elem color_elem1;
 	t_color_elem color_elem2;
 	t_color_elem color_diff;
-	map_info1.x = 500 + 10 * map_info1.x;
-	map_info1.y = 500 + 10 * map_info1.y;
-	map_info2.x = 500 + 10 * map_info2.x;
-	map_info2.y = 500 + 10 * map_info2.y;
+	map_info1.x = 900 + 5 * map_info1.x;
+	map_info1.y = 400 + 5 * map_info1.y;
+	map_info2.x = 900 + 5 * map_info2.x;
+	map_info2.y = 400 + 5 * map_info2.y;
 	t_line_params line_params;
 	// SPLIT T,R,B,G
 	color_elem1 = get_col_elem(map_info1.color);

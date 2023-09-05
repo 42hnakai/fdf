@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 14:12:37 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 18:48:27 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_map_info **malloc_map_info(t_map_size map_size)
 		map_info[i] = malloc(sizeof(t_map_info) * (map_size.x_length + 1));
 		if (map_info[i] == NULL)
 		{
-			free_double(map_info,i);
+			free_double(map_info, i);
 			return (NULL);
 		}
 		i++;
@@ -168,6 +168,7 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file
 	get_x_y(map_info, map_size);
 	while ((line = get_next_line(fd)) != NULL)
 	{
+		line = ft_strtrim(line, "\n");
 		get_z(map_info, line, y_axis);
 		get_color(map_info, line, y_axis);
 		free(line);

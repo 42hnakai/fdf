@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 17:44:47 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 14:22:21 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 19:02:28 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	if ((x < 100 || 1900 < x) || (y < 100 || 1000 < y))
 		return;
-	// if ((0 < x || x < 5) || (0 < y || y < 5))
-	// 	return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -64,15 +62,9 @@ int main(int argc, char *argv[])
 	t_data img;
 
 	if (argc != 2)
-	{
-		printf("[ERROR!] no file\n");
-		return (-1);
-	}
+		return (display_error("[ERROR!] no file"));
 	if (check_valid_file(argv[1]) == -1)
-	{
-		printf("[ERROR!] invalid file\n");
-		return (-1);
-	}
+		return (display_error("[ERROR!] invalid file"));
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
