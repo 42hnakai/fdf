@@ -1,7 +1,8 @@
 CC = cc
 GFLAGS = -Wall -Wextra -Werror
 NAME = fdf
-SRC = drowline.c get_map_info.c get_map_vector.c color.c main.c
+SRC = src/drowline.c src/get_map_info.c src/get_map_vector.c src/color.c src/check_error.c\
+	  src/utils.c src/main.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

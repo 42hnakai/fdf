@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 17:44:47 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/04 23:59:12 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 14:22:21 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	char *dst;
 
 	if ((x < 100 || 1900 < x) || (y < 100 || 1000 < y))
-		return ;
+		return;
 	// if ((0 < x || x < 5) || (0 < y || y < 5))
 	// 	return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
@@ -35,6 +35,11 @@ void draw_fdf(char *file_name, t_data img)
 	y = 0;
 	map_size = get_map_size(file_name);
 	map_info = malloc_map_info(map_size);
+	if (map_info == NULL)
+	{
+		printf("[ERROR!] fail malloc");
+		exit(1);
+	}
 	map_info = get_map_info(map_info, map_size, file_name);
 	map_info = get_map_vector(map_info, map_size);
 	while (y < map_size.y_length)
@@ -59,13 +64,22 @@ int main(int argc, char *argv[])
 	t_data img;
 
 	if (argc != 2)
-		return (0);
-	//.fdfファイル以外を彈く
+	{
+		printf("[ERROR!] no file\n");
+		return (-1);
+	}
+	if (check_valid_file(argv[1]) == -1)
+	{
+		printf("[ERROR!] invalid file\n");
+		return (-1);
+	}
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 								 &img.line_length, &img.endian);
+	if (check_valid_map(argv[1]) == -1)
+		return (-1);
 	draw_fdf(argv[1], img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);

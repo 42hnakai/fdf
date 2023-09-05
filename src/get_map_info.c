@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/04 23:44:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/05 14:12:37 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,16 @@ t_map_info **malloc_map_info(t_map_size map_size)
 
 	i = 0;
 	map_info = malloc(sizeof(t_map_info *) * (map_size.y_length + 1));
+	if (map_info == NULL)
+		return (NULL);
 	while (i < map_size.y_length)
 	{
 		map_info[i] = malloc(sizeof(t_map_info) * (map_size.x_length + 1));
+		if (map_info[i] == NULL)
+		{
+			free_double(map_info,i);
+			return (NULL);
+		}
 		i++;
 	}
 	return (map_info);
@@ -131,7 +138,7 @@ t_map_size get_map_size(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error opening file");
+		printf("Error opening file");
 		exit(1);
 	}
 	while ((line = get_next_line(fd)) != NULL)
@@ -142,7 +149,7 @@ t_map_size get_map_size(char *file_name)
 	}
 	if (close(fd) == -1)
 	{
-		perror("Error closing file");
+		printf("Error closing file");
 		exit(1);
 	}
 	return (map_size);
