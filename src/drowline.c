@@ -6,14 +6,14 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 19:12:10 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:45:32 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 // WANT TO CHANGE FUNC NAME TO "GET_LINE_PARAMS"
-t_line_params make_line_wq(double x1, double x2, double y1, double y2)
+t_line_params get_params(double x1, double x2, double y1, double y2)
 {
 	double diff_x;
 	double diff_y;
@@ -55,7 +55,7 @@ double get_dist(double x1, double x2, double y1, double y2)
 	return (dist);
 }
 
-void drawline(t_map_info map_info1, t_map_info map_info2, t_data img)
+void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t_data img)
 {
 	int x;
 	int y;
@@ -64,10 +64,10 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_data img)
 	t_color_elem color_elem1;
 	t_color_elem color_elem2;
 	t_color_elem color_diff;
-	map_info1.x = 900 + 5 * map_info1.x;
-	map_info1.y = 400 + 5 * map_info1.y;
-	map_info2.x = 900 + 5 * map_info2.x;
-	map_info2.y = 400 + 5 * map_info2.y;
+	map_info1.x = 900 + 900/map_size.x_length * map_info1.x;
+	map_info1.y = 400 + 400/map_size.y_length * map_info1.y;
+	map_info2.x = 900 + 900/map_size.x_length  * map_info2.x;
+	map_info2.y = 400 + 400/map_size.y_length * map_info2.y;
 	t_line_params line_params;
 	// SPLIT T,R,B,G
 	color_elem1 = get_col_elem(map_info1.color);
@@ -78,10 +78,11 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_data img)
 		{
 			ft_swap(&map_info1.y, &map_info2.y);
 		}
+		color_diff = get_col_diff(color_elem1, color_elem2);
 		y = map_info1.y + 1;
 		while (map_info1.y <= y && y <= map_info2.y)
 		{
-			my_mlx_pixel_put(&img, map_info1.x, y, 0x00FFFF);
+			my_mlx_pixel_put(&img, map_info1.x, y,0xFF);
 			y++;
 		}
 	}
@@ -94,13 +95,13 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_data img)
 		x = map_info1.x + 1;
 		while (map_info1.x <= x && x <= map_info2.x)
 		{
-			my_mlx_pixel_put(&img, x, map_info1.y, 0x00FF0000);
+			my_mlx_pixel_put(&img, x, map_info1.y, 0xFF);
 			x++;
 		}
 	}
 	else
 	{
-		line_params = make_line_wq(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
+		line_params = get_params(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
 		if (map_info2.x < map_info1.x)
 		{
 			color_diff = get_col_diff(color_elem2, color_elem1);

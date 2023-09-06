@@ -1,5 +1,5 @@
 CC = cc
-GFLAGS = -Wall -Wextra -Werror
+GFLAGS = -Wall -Wextra -Werror -O2
 NAME = fdf
 SRC = src/drowline.c src/get_map_info.c src/get_map_vector.c src/color.c src/check_error.c\
 	  src/utils.c src/main.c

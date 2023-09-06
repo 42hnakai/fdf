@@ -6,18 +6,18 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:38:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 16:44:54 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:29:25 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map_info	**get_map_vector(t_map_info **map_info, t_map_size map_size)
+t_map_info **get_map_vector(t_map_info **map_info, t_map_size map_size)
 {
-	int			x;
-	int			y;
-	t_x_vector	x_vector;
-	t_y_vector	y_vector;
+	int x;
+	int y;
+	t_x_vector x_vector;
+	t_y_vector y_vector;
 
 	x = 0;
 	y = 0;
@@ -31,7 +31,7 @@ t_map_info	**get_map_vector(t_map_info **map_info, t_map_size map_size)
 		while (x < map_size.x_length)
 		{
 			map_info[y][x].x = x_vector.new_x * x + y_vector.new_x * y;
-			map_info[y][x].y = x_vector.new_y * x + y_vector.new_y * y - map_info[y][x].z / 3;
+			map_info[y][x].y = x_vector.new_y * x + y_vector.new_y * y - 2 * map_info[y][x].z / 3;
 			x++;
 		}
 		y++;

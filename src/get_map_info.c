@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/05 18:48:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/06 22:05:19 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,6 @@ void get_x_y(t_map_info **map_info, t_map_size map_size)
 		}
 		y++;
 	}
-}
-
-t_map_info **get_z(t_map_info **map_info, char *line, int y_axis)
-{
-	int i;
-	char **info;
-	char **z;
-
-	i = 0;
-	info = ft_split(line, ' ');
-	while (info[i] != NULL)
-	{
-		z = ft_split(info[i], ',');
-		map_info[y_axis][i].z = ft_atoi(z[0]);
-		i++;
-	}
-	return (map_info);
 }
 
 int hex_to_bin(char *hex)
@@ -72,35 +55,15 @@ int hex_to_bin(char *hex)
 	return (bin);
 }
 
-t_map_info **get_color(t_map_info **map_info, char *line, int y_axis)
+int get_x_length(char **info_by_space)
 {
 	int i;
-	char **info;
-	char **color;
+	int x_length;
 
 	i = 0;
-	info = ft_split(line, ' ');
-	while (info[i] != NULL)
-	{
-		color = ft_split(info[i], ',');
-		if (color[1] != NULL)
-			map_info[y_axis][i].color = hex_to_bin(color[1]);
-		else
-			map_info[y_axis][i].color = hex_to_bin("0xFFFFFF");
+	while (info_by_space[i] != NULL)
 		i++;
-	}
-	return (map_info);
-}
-
-int get_x_length(char *line)
-{
-	int x_length;
-	char **splits;
-
-	x_length = 0;
-	splits = ft_split(line, ' ');
-	while (splits[x_length] != NULL && ft_strncmp(splits[x_length], "\n", 1) != 0)
-		x_length++;
+	x_length = i;
 	return (x_length); // EXCEPT NEWLINE
 }
 
@@ -133,26 +96,59 @@ t_map_size get_map_size(char *file_name)
 	int fd;
 	t_map_size map_size;
 	char *line;
+	char **elems_ary;
 
 	map_size.y_length = 0;
 	fd = open(file_name, O_RDONLY);
-	if (fd == -1)
+	check_fd(fd);
+	if ((line = get_next_line(fd)) != NULL)
 	{
-		printf("Error opening file");
-		exit(1);
+		line = ft_strtrim(line, "\n");
+		elems_ary = ft_split(line, ' ');
+		map_size.x_length = get_x_length(elems_ary);
+		map_size.y_length++;
+		free(line);
 	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		map_size.x_length = get_x_length(line);
 		free(line);
 		map_size.y_length++;
 	}
-	if (close(fd) == -1)
-	{
-		printf("Error closing file");
-		exit(1);
-	}
+	check_close(fd);
 	return (map_size);
+}
+
+void get_elems(t_map_info **map_info, char **elems_ary, int y_axis)
+{
+	int x_axis;
+	char **z_color_ary;
+	char *z_ary;
+	char *color_ary;
+
+	x_axis = 0;
+	while (elems_ary[x_axis] != NULL)
+	{
+		z_color_ary = ft_split(elems_ary[x_axis], ',');
+		z_ary = z_color_ary[0];
+		color_ary = z_color_ary[1];
+		get_z(map_info, z_ary, y_axis, x_axis);
+		get_color(map_info, color_ary, y_axis, x_axis);
+		x_axis++;
+	}
+}
+
+void get_color(t_map_info **map_info, char *color_ary, int y_axis, int x_axis)
+{
+
+	if (color_ary != NULL)
+		map_info[y_axis][x_axis].color = hex_to_bin(color_ary);
+	else
+		map_info[y_axis][x_axis].color = hex_to_bin("0xFFFFFF");
+}
+
+void get_z(t_map_info **map_info, char *z_ary, int y_axis, int x_axis)
+{
+	map_info[y_axis][x_axis].z = ft_atoi(z_ary);
 }
 
 t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name)
@@ -160,25 +156,20 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file
 	int fd;
 	int y_axis;
 	char *line;
+	char **elems_ary;
 
 	y_axis = 0;
-	// MALLOC MAP_INFO
 	fd = open(file_name, O_RDONLY);
-	// GET EVERY LINE TO LINE
+	check_fd(fd);
 	get_x_y(map_info, map_size);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		line = ft_strtrim(line, "\n");
-		get_z(map_info, line, y_axis);
-		get_color(map_info, line, y_axis);
+		elems_ary = ft_split(line, ' ');
+		get_elems(map_info, elems_ary, y_axis);
 		free(line);
 		y_axis++;
 	}
-	// CLOSE FD
-	if (close(fd) == -1)
-	{
-		perror("Error closing file");
-		exit(1);
-	}
+	check_close(fd);
 	return (map_info);
 }

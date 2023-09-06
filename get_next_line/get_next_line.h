@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 00:06:58 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/02 13:19:25 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/06 22:34:31 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
-
+# include <unistd.h> 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 10000
 # endif
 
 char	*get_next_line(int fd);
