@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/06 21:45:32 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/07 19:14:12 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 	t_color_elem color_elem1;
 	t_color_elem color_elem2;
 	t_color_elem color_diff;
-	map_info1.x = 900 + 900/map_size.x_length * map_info1.x;
-	map_info1.y = 400 + 400/map_size.y_length * map_info1.y;
-	map_info2.x = 900 + 900/map_size.x_length  * map_info2.x;
-	map_info2.y = 400 + 400/map_size.y_length * map_info2.y;
+	map_info1.x = 900.0 + (900.0 / map_size.x_length) * map_info1.x;
+	map_info1.y = 400.0 + (400.0 / map_size.y_length) * map_info1.y;
+	map_info2.x = 900.0 + (900.0 / map_size.x_length) * map_info2.x;
+	map_info2.y = 400.0 + (400.0 / map_size.y_length) * map_info2.y;
 	t_line_params line_params;
 	// SPLIT T,R,B,G
 	color_elem1 = get_col_elem(map_info1.color);
@@ -82,7 +82,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 		y = map_info1.y + 1;
 		while (map_info1.y <= y && y <= map_info2.y)
 		{
-			my_mlx_pixel_put(&img, map_info1.x, y,0xFF);
+			my_mlx_pixel_put(&img, map_info1.x, y, 0xFFFFFF);
 			y++;
 		}
 	}
@@ -95,7 +95,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 		x = map_info1.x + 1;
 		while (map_info1.x <= x && x <= map_info2.x)
 		{
-			my_mlx_pixel_put(&img, x, map_info1.y, 0xFF);
+			my_mlx_pixel_put(&img, x, map_info1.y, 0xFFFFFF);
 			x++;
 		}
 	}
@@ -110,7 +110,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 			{
 				y = get_y(x, line_params);
 				percent = get_dist(x, map_info2.x, y, map_info2.y) / get_dist(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
-				color = map_info2.color + add_col(color_diff, percent);
+				color = add_col(color_elem2, color_diff, percent);
 				my_mlx_pixel_put(&img, x, y, color);
 				x++;
 			}
@@ -123,7 +123,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 			{
 				y = get_y(x, line_params);
 				percent = get_dist(x, map_info1.x, y, map_info1.y) / get_dist(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
-				color = map_info1.color + add_col(color_diff, percent);
+				color = add_col(color_elem1, color_diff, percent);
 				my_mlx_pixel_put(&img, x, y, color);
 				x++;
 			}
@@ -136,7 +136,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 			{
 				x = get_x(y, line_params);
 				percent = get_dist(x, map_info2.x, y, map_info2.y) / get_dist(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
-				color = map_info2.color + add_col(color_diff, percent);
+				color = add_col(color_elem2, color_diff, percent);
 				my_mlx_pixel_put(&img, x, y, color);
 				y++;
 			}
@@ -149,7 +149,7 @@ void drawline(t_map_info map_info1, t_map_info map_info2, t_map_size map_size, t
 			{
 				x = get_x(y, line_params);
 				percent = get_dist(x, map_info1.x, y, map_info1.y) / get_dist(map_info1.x, map_info2.x, map_info1.y, map_info2.y);
-				color = map_info1.color + add_col(color_diff, percent);
+				color = add_col(color_elem1, color_diff, percent);
 				my_mlx_pixel_put(&img, x, y, color);
 				y++;
 			}

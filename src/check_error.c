@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:57:39 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/06 21:56:17 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/07 18:15:52 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int check_color(char *color)
 		return (0);
 	else if (!(color[0] == '0' && color[1] == 'x'))
 		return (-1);
-	else if (ft_strlen(color) < 3 || 8 < ft_strlen(color))
+	else if (ft_strlen(color) < 3 || 10 < ft_strlen(color))
 		return (-1);
 	i = 2;
 	while (color[i] != '\0')

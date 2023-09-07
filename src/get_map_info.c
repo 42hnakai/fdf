@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/06 22:05:19 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:46 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void get_x_y(t_map_info **map_info, t_map_size map_size)
 		{
 			map_info[y][x].x = x;
 			map_info[y][x].y = y;
+			// printf("map_info[%d][%d] = %f\n", y,x, map_info[y][x].y);
 			x++;
 		}
 		y++;
@@ -48,10 +49,15 @@ int hex_to_bin(char *hex)
 		}
 		else if ('A' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= 'F')
 		{
-			bin += pow(16, i) * (hex[(len - 1) - i] - 55);
+			bin += pow(16, i) * (hex[(len - 1) - i] - 'A' + 10);
+		}
+		else if ('a' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= 'f')
+		{
+			bin += pow(16, i) * (hex[(len - 1) - i] - 'a' + 10);
 		}
 		i++;
 	}
+	// printf("color[bin] : %d\n", bin);
 	return (bin);
 }
 
@@ -144,6 +150,8 @@ void get_color(t_map_info **map_info, char *color_ary, int y_axis, int x_axis)
 		map_info[y_axis][x_axis].color = hex_to_bin(color_ary);
 	else
 		map_info[y_axis][x_axis].color = hex_to_bin("0xFFFFFF");
+	// printf("color : %s\n", color_ary);
+	// printf("color : %d\n",map_info[y_axis][x_axis].color);
 }
 
 void get_z(t_map_info **map_info, char *z_ary, int y_axis, int x_axis)

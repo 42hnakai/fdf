@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:37:15 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/06 22:40:58 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/07 18:47:20 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file
 // COLOR.c
 t_color_elem get_col_elem(int color);
 t_color_elem get_col_diff(t_color_elem color_elem1, t_color_elem color_elem2);
-int add_col(t_color_elem color_diff, double percent);
+int add_col(t_color_elem color_elem, t_color_elem color_diff, double percent);
 
 // UTILS.c
 void	free_double(t_map_info **map_info, int i);
