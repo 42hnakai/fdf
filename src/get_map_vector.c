@@ -6,33 +6,33 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 23:38:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/07 19:52:56 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/08 00:07:59 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map_info **get_map_vector(t_map_info **map_info, t_map_size map_size)
+t_map_info	**get_map_vector(t_map_info **map_info, t_map_size map_size)
 {
-	int x;
-	int y;
-	t_x_vector x_vector;
-	t_y_vector y_vector;
+	int			x;
+	int			y;
+	t_x_vector	x_vector;
+	t_y_vector	y_vector;
 
 	x = 0;
 	y = 0;
 	x_vector.new_x = cos(30 * M_PI / 180);
-	x_vector.new_y = -sin(30 * M_PI / 180);
-	y_vector.new_x = cos(-60 * M_PI / 180);
-	y_vector.new_y = -sin(-60 * M_PI / 180);
+	x_vector.new_y = sin(30 * M_PI / 180);
+	y_vector.new_x = -cos(30 * M_PI / 180);
+	y_vector.new_y = sin(30 * M_PI / 180);
 	while (y < map_size.y_length)
 	{
 		x = 0;
 		while (x < map_size.x_length)
 		{
 			map_info[y][x].x = x_vector.new_x * x + y_vector.new_x * y;
-			map_info[y][x].y = x_vector.new_y * x + y_vector.new_y * y - map_info[y][x].z / 2;
-			// printf("map_info_vector[%d][%d] = %f\n", y,x, map_info[y][x].y);
+			map_info[y][x].y = x_vector.new_y * x + y_vector.new_y * y
+				- map_info[y][x].z / 2;
 			x++;
 		}
 		y++;

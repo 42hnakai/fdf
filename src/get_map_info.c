@@ -6,16 +6,16 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/07 18:14:46 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/08 00:06:35 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void get_x_y(t_map_info **map_info, t_map_size map_size)
+void	get_x_y(t_map_info **map_info, t_map_size map_size)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < map_size.y_length)
@@ -25,84 +25,19 @@ void get_x_y(t_map_info **map_info, t_map_size map_size)
 		{
 			map_info[y][x].x = x;
 			map_info[y][x].y = y;
-			// printf("map_info[%d][%d] = %f\n", y,x, map_info[y][x].y);
 			x++;
 		}
 		y++;
 	}
 }
 
-int hex_to_bin(char *hex)
-{
-	int bin;
-	int len;
-	int i;
-
-	i = 0;
-	len = ft_strlen(hex);
-	bin = 0;
-	while (hex[(len - 1) - i] != 'x')
-	{
-		if ('0' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= '9')
-		{
-			bin += pow(16, i) * (hex[(len - 1) - i] - '0');
-		}
-		else if ('A' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= 'F')
-		{
-			bin += pow(16, i) * (hex[(len - 1) - i] - 'A' + 10);
-		}
-		else if ('a' <= hex[(len - 1) - i] && hex[(len - 1) - i] <= 'f')
-		{
-			bin += pow(16, i) * (hex[(len - 1) - i] - 'a' + 10);
-		}
-		i++;
-	}
-	// printf("color[bin] : %d\n", bin);
-	return (bin);
-}
-
-int get_x_length(char **info_by_space)
-{
-	int i;
-	int x_length;
-
-	i = 0;
-	while (info_by_space[i] != NULL)
-		i++;
-	x_length = i;
-	return (x_length); // EXCEPT NEWLINE
-}
-
-// MALLOC MAP_INFO
-t_map_info **malloc_map_info(t_map_size map_size)
-{
-	int i;
-	t_map_info **map_info;
-
-	i = 0;
-	map_info = malloc(sizeof(t_map_info *) * (map_size.y_length + 1));
-	if (map_info == NULL)
-		return (NULL);
-	while (i < map_size.y_length)
-	{
-		map_info[i] = malloc(sizeof(t_map_info) * (map_size.x_length + 1));
-		if (map_info[i] == NULL)
-		{
-			free_double(map_info, i);
-			return (NULL);
-		}
-		i++;
-	}
-	return (map_info);
-}
-
 // GET MAP SIZE(X_LENGTH, Y_LENGTH)
-t_map_size get_map_size(char *file_name)
+t_map_size	get_map_size(char *file_name)
 {
-	int fd;
-	t_map_size map_size;
-	char *line;
-	char **elems_ary;
+	int			fd;
+	t_map_size	map_size;
+	char		*line;
+	char		**elems_ary;
 
 	map_size.y_length = 0;
 	fd = open(file_name, O_RDONLY);
@@ -124,12 +59,12 @@ t_map_size get_map_size(char *file_name)
 	return (map_size);
 }
 
-void get_elems(t_map_info **map_info, char **elems_ary, int y_axis)
+void	get_elems(t_map_info **map_info, char **elems_ary, int y_axis)
 {
-	int x_axis;
-	char **z_color_ary;
-	char *z_ary;
-	char *color_ary;
+	int		x_axis;
+	char	**z_color_ary;
+	char	*z_ary;
+	char	*color_ary;
 
 	x_axis = 0;
 	while (elems_ary[x_axis] != NULL)
@@ -143,28 +78,12 @@ void get_elems(t_map_info **map_info, char **elems_ary, int y_axis)
 	}
 }
 
-void get_color(t_map_info **map_info, char *color_ary, int y_axis, int x_axis)
+t_map_info	**get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name)
 {
-
-	if (color_ary != NULL)
-		map_info[y_axis][x_axis].color = hex_to_bin(color_ary);
-	else
-		map_info[y_axis][x_axis].color = hex_to_bin("0xFFFFFF");
-	// printf("color : %s\n", color_ary);
-	// printf("color : %d\n",map_info[y_axis][x_axis].color);
-}
-
-void get_z(t_map_info **map_info, char *z_ary, int y_axis, int x_axis)
-{
-	map_info[y_axis][x_axis].z = ft_atoi(z_ary);
-}
-
-t_map_info **get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name)
-{
-	int fd;
-	int y_axis;
-	char *line;
-	char **elems_ary;
+	int		fd;
+	int		y_axis;
+	char	*line;
+	char	**elems_ary;
 
 	y_axis = 0;
 	fd = open(file_name, O_RDONLY);
