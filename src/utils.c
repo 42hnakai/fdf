@@ -6,13 +6,13 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:59:13 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/08 00:30:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/09 18:24:27 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_double(t_map_info **map_info, int i)
+void	free_double_n(t_map_info **map_info, int i)
 {
 	while (i > 0)
 	{
@@ -20,6 +20,16 @@ void	free_double(t_map_info **map_info, int i)
 		i--;
 	}
 	free(map_info);
+}
+
+void	free_double_char_n(char **str, int i)
+{
+	while (i > 0)
+	{
+		free(str[i - 1]);
+		i--;
+	}
+	free(str);
 }
 
 void	check_fd(int fd)

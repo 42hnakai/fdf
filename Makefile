@@ -12,7 +12,7 @@ $(NAME): $(OBJ)
 	make -C libft
 	make -C get_next_line
 	make -C ft_printf
-	$(CC) $(GFLAGS) $(OBJ) -g -fsanitize=address -Llibft -lft -Lget_next_line -lget_next_line -Lft_printf -lftprintf -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(GFLAGS) $(OBJ) -Llibft -lft -Lget_next_line -lget_next_line -Lft_printf -lftprintf -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 .c.o:
 	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@

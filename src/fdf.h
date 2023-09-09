@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:37:15 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/08 00:13:37 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/09 18:24:43 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ double			get_dist(double x1, double x2, double y1, double y2);
 //=GET MAP VECTOR==============================================================
 t_map_info		**get_map_vector(t_map_info **map_info, t_map_size map_size);
 //=UTILS.c=====================================================================
-void			free_double(t_map_info **map_info, int i);
+void			free_double_n(t_map_info **map_info, int i);
+void			free_double_char_n(char **str, int i);
 void			check_fd(int fd);
 void			check_close(int fd);
 int				esc_close(int keycode, t_vars *vars);
