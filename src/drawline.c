@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/12 22:51:31 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/13 02:34:00 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	draw_yline(t_map_info start, t_map_info end, t_data img)
 	double			percent;
 	t_color_elems	color_diff;
 
-	color_diff = get_col_diff(start.color, end.color);
+;	color_diff = get_col_diff(start.color, end.color);
 	y = start.y + 1;
 	while (start.y <= y && y <= end.y)
 	{
@@ -61,7 +61,7 @@ void	drawline_by_x(t_map_info start, t_map_info end,
 
 	x = start.x + 1;
 	color_diff = get_col_diff(start.color, end.color);
-	while (start.x <= x && x <= end.x)
+	while (start.x <= (double)x && (double)x <= end.x)
 	{
 		y = get_y(x, line_params);
 		percent = get_dist(x, start.x, y, start.y) / get_dist(start.x, end.x,
@@ -84,7 +84,7 @@ void	drawline_by_y(t_map_info start, t_map_info end,
 	x = 0;
 	y = start.y + 1;
 	color_diff = get_col_diff(start.color, end.color);
-	while (start.y <= y && y <= end.y)
+	while (start.y <= (double)y && (double)y <= end.y)
 	{
 		x = get_x(y, line_params);
 		percent = get_dist(x, start.x, y, start.y) / get_dist(start.x, end.x,

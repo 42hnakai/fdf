@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:59:13 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/12 22:46:44 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/13 02:34:45 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	check_close(int fd)
 
 t_map_info	change_scale(t_map_info map_info, t_map_size map_size)
 {
-	map_info.x = 900.0 + (400.0 / map_size.x_length) * map_info.x;
-	map_info.y = 400.0 + (400.0 / map_size.x_length) * map_info.y;
+	map_info.x = 900.0 + (600.0 / (double)map_size.x_length) * map_info.x;
+	map_info.y = 500.0 + (600.0 / (double)map_size.x_length) * map_info.y;
 	return (map_info);
 }
