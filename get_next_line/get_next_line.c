@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 00:59:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/06 22:29:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:14:29 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ char	*get_next_line(int fd)
 	save = NULL;
 	while (ft_count(buff) == ft_strlen1(buff))
 	{
-		line = ft_strjoin(line, buff);
+		line = gnl_ft_strjoin(line, buff);
 		buff = ft_readbuff(buff, fd);
 		if (!buff)
 			return (line);
 	}
 	arr = ft_substr(buff, 0, ft_count(buff) + 1);
-	line = ft_strjoin(line, arr);
+	line = gnl_ft_strjoin(line, arr);
 	free(arr);
 	save = ft_make_save(buff);
 	return (line);

@@ -1,0 +1,8 @@
+# Ignore Visual Studio Code directory
+.vscode/
+
+# Ignore test_maps directory
+test_maps/
+
+# Ignore fdf_test file
+fdf_test

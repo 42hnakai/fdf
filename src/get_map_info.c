@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:19:04 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/08 00:06:35 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:41:45 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,20 @@ t_map_size	get_map_size(char *file_name)
 	map_size.y_length = 0;
 	fd = open(file_name, O_RDONLY);
 	check_fd(fd);
-	if ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	if (line != NULL)
 	{
-		line = ft_strtrim(line, "\n");
-		elems_ary = ft_split(line, ' ');
+		elems_ary = get_elems_ary(line);
 		map_size.x_length = get_x_length(elems_ary);
 		map_size.y_length++;
-		free(line);
+		free_double((void **)elems_ary);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		free(line);
 		map_size.y_length++;
+		free(line);
+		line = get_next_line(fd);
 	}
 	check_close(fd);
 	return (map_size);
@@ -74,28 +76,35 @@ void	get_elems(t_map_info **map_info, char **elems_ary, int y_axis)
 		color_ary = z_color_ary[1];
 		get_z(map_info, z_ary, y_axis, x_axis);
 		get_color(map_info, color_ary, y_axis, x_axis);
+		free_double((void **)z_color_ary);
 		x_axis++;
 	}
 }
 
-t_map_info	**get_map_info(t_map_info **map_info, t_map_size map_size, char *file_name)
+t_map_info	**get_map_info(t_map_info **map_info, t_map_size map_size,
+		char *file_name)
 {
 	int		fd;
 	int		y_axis;
 	char	*line;
+	char	*line_no_nl;
 	char	**elems_ary;
 
 	y_axis = 0;
 	fd = open(file_name, O_RDONLY);
 	check_fd(fd);
 	get_x_y(map_info, map_size);
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		line = ft_strtrim(line, "\n");
-		elems_ary = ft_split(line, ' ');
-		get_elems(map_info, elems_ary, y_axis);
+		line_no_nl = ft_strtrim(line, "\n");
 		free(line);
+		elems_ary = ft_split(line_no_nl, ' ');
+		free(line_no_nl);
+		get_elems(map_info, elems_ary, y_axis);
 		y_axis++;
+		free_double((void **)elems_ary);
+		line = get_next_line(fd);
 	}
 	check_close(fd);
 	return (map_info);

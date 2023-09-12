@@ -1,9 +1,10 @@
 CC = cc
 GFLAGS = -Wall -Wextra -Werror -O2
 NAME = fdf
-SRC = src/drawline.c src/drawline_utils.c src/get_map_info.c src/get_map_info_utils.c src/get_map_vector.c\
+SRC = src/drawline.c src/drawline_utils.c src/get_map_info.c\
+	  src/get_map_info_utils.c src/get_map_info_utils2.c src/get_map_vector.c\
 	  src/check_color_utils.c src/color.c src/check_error.c\
-	  src/utils.c src/main.c
+	  src/close_terminal.c src/utils.c src/main.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

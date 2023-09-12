@@ -6,16 +6,16 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 19:14:03 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/07 23:32:47 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 20:54:19 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 // GET COLOR ELEMENT
-t_color_elems get_col_elem(int color)
+t_color_elems	get_col_elem(int color)
 {
-	t_color_elems color_elem;
+	t_color_elems	color_elem;
 
 	color_elem.b = color % 256;
 	color = color / 256;
@@ -28,11 +28,11 @@ t_color_elems get_col_elem(int color)
 }
 
 // GET COLOR DIFFERENCE
-t_color_elems get_col_diff(int color1, int color2)
+t_color_elems	get_col_diff(int color1, int color2)
 {
-	t_color_elems color1_elem;
-	t_color_elems color2_elem;
-	t_color_elems color_diff;
+	t_color_elems	color1_elem;
+	t_color_elems	color2_elem;
+	t_color_elems	color_diff;
 
 	color1_elem = get_col_elem(color1);
 	color2_elem = get_col_elem(color2);
@@ -44,13 +44,13 @@ t_color_elems get_col_diff(int color1, int color2)
 }
 
 // ADD COLOR
-int add_col(int color, t_color_elems color_diff, double percent)
+int	add_col(int color, t_color_elems color_diff, double percent)
 {
-	int add_color;
-	t_color_elems color_elem;
+	int				add_color;
+	t_color_elems	color_elem;
 
 	add_color = 0;
-	color_elem= get_col_elem(color);
+	color_elem = get_col_elem(color);
 	color_elem.b += color_diff.b * percent;
 	color_elem.g += color_diff.g * percent;
 	color_elem.r += color_diff.r * percent;

@@ -6,11 +6,38 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 23:40:19 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/07 23:40:33 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:53:12 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	help_drawline(t_map_info start, t_map_info end,
+		t_line_params line_params, t_data img)
+{
+	if (start.x == end.x)
+	{
+		if (start.y < end.y)
+			draw_yline(start, end, img);
+		else
+			draw_yline(end, start, img);
+	}
+	else if (start.x < end.x)
+		drawline_by_x(start, end, line_params, img);
+	else
+		drawline_by_x(end, start, line_params, img);
+	if (start.y == end.y)
+	{
+		if (start.x < end.x)
+			draw_xline(start, end, img);
+		else
+			draw_xline(end, start, img);
+	}
+	else if (start.y < end.y)
+		drawline_by_y(start, end, line_params, img);
+	else
+		drawline_by_y(end, start, line_params, img);
+}
 
 t_line_params	get_params(double x1, double x2, double y1, double y2)
 {

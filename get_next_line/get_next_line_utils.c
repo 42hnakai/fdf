@@ -6,13 +6,13 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 00:02:03 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/02 13:19:11 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 23:06:42 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	gnl_ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	count;
 
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	a = (char *)malloc(sizeof(char) * (len + 1));
 	if (!a)
 		return (NULL);
-	ft_strlcpy(a, s + start, len + 1);
+	gnl_ft_strlcpy(a, s + start, len + 1);
 	return (a);
 }
 
@@ -67,7 +67,7 @@ size_t	ft_strlen1(const char *str)
 	return (len);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 
@@ -89,8 +89,9 @@ char	*ft_strjoin(char *s1, char *s2)
 		free(s1);
 		return (NULL);
 	}
-	ft_strlcpy(str, s1, ft_strlen1(s1) + 1);
-	ft_strlcpy(str + ft_strlen1(s1), s2, ft_strlen1(s1) + ft_strlen1(s2) + 1);
+	gnl_ft_strlcpy(str, s1, ft_strlen1(s1) + 1);
+	gnl_ft_strlcpy(str + ft_strlen1(s1), s2, ft_strlen1(s1) + ft_strlen1(s2)
+		+ 1);
 	free(s1);
 	return (str);
 }

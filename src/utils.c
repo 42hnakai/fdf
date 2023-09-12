@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 13:59:13 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/09 18:24:27 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:46:44 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ void	free_double_n(t_map_info **map_info, int i)
 	free(map_info);
 }
 
-void	free_double_char_n(char **str, int i)
+void	free_double(void **str)
 {
-	while (i > 0)
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
 	{
-		free(str[i - 1]);
-		i--;
+		free(str[i]);
+		i++;
 	}
 	free(str);
 }
@@ -50,18 +53,9 @@ void	check_close(int fd)
 	}
 }
 
-int	esc_close(int keycode, t_vars *vars)
+t_map_info	change_scale(t_map_info map_info, t_map_size map_size)
 {
-	if (keycode == 53)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		exit(0);
-	}
-	return (0);
-}
-
-int	x_close(t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0);
+	map_info.x = 900.0 + (400.0 / map_size.x_length) * map_info.x;
+	map_info.y = 400.0 + (400.0 / map_size.x_length) * map_info.y;
+	return (map_info);
 }

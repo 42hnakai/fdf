@@ -6,23 +6,23 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:03:50 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/09 18:25:48 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:12:43 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	get_color(t_map_info **map_info, char *color_ary, int y_axis, int x_axis)
+void	get_color(t_map_info **map_info, char *color_ary, int y, int x)
 {
 	if (color_ary != NULL)
-		map_info[y_axis][x_axis].color = hex_to_bin(color_ary);
+		map_info[y][x].color = hex_to_bin(color_ary);
 	else
-		map_info[y_axis][x_axis].color = hex_to_bin("0xFFFFFF");
+		map_info[y][x].color = hex_to_bin("0xFFFFFF");
 }
 
-void	get_z(t_map_info **map_info, char *z_ary, int y_axis, int x_axis)
+void	get_z(t_map_info **map_info, char *z_ary, int y, int x)
 {
-	map_info[y_axis][x_axis].z = ft_atoi(z_ary);
+	map_info[y][x].z = ft_atoi(z_ary);
 }
 
 int	hex_to_bin(char *hex)
@@ -68,7 +68,7 @@ int	get_x_length(char **info_by_space)
 // MALLOC MAP_INFO
 t_map_info	**malloc_map_info(t_map_size map_size)
 {
-	int i;
+	int			i;
 	t_map_info	**map_info;
 
 	i = 0;
@@ -81,9 +81,11 @@ t_map_info	**malloc_map_info(t_map_size map_size)
 		if (map_info[i] == NULL)
 		{
 			free_double_n(map_info, i);
-			return (NULL);
+			ft_printf("[ERROR!] fail malloc\n");
+			exit(1);
 		}
 		i++;
 	}
+	map_info[i] = NULL;
 	return (map_info);
 }
