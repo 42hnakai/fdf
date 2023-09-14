@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:33:25 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/13 02:34:00 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/13 16:22:21 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	draw_xline(t_map_info start, t_map_info end, t_data img)
 
 	color_diff = get_col_diff(start.color, end.color);
 	x = start.x + 1;
-	while (start.x <= x && x <= end.x)
+	while (start.x <= (double)x && (double)x <= end.x)
 	{
 		percent = get_dist(x, start.x, start.y, start.y) / get_dist(start.x,
 				end.x, start.y, end.y);
@@ -38,9 +38,9 @@ void	draw_yline(t_map_info start, t_map_info end, t_data img)
 	double			percent;
 	t_color_elems	color_diff;
 
-;	color_diff = get_col_diff(start.color, end.color);
+	color_diff = get_col_diff(start.color, end.color);
 	y = start.y + 1;
-	while (start.y <= y && y <= end.y)
+	while (start.y <= (double)y && (double)y <= end.y)
 	{
 		percent = get_dist(start.x, start.x, y, start.y) / get_dist(start.x,
 				end.x, start.y, end.y);

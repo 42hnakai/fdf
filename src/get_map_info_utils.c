@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:03:50 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/12 22:12:43 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/14 17:44:28 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ t_map_info	**malloc_map_info(t_map_size map_size)
 	i = 0;
 	map_info = malloc(sizeof(t_map_info *) * (map_size.y_length + 1));
 	if (map_info == NULL)
-		return (NULL);
+	{
+		ft_printf("[ERROR!] fail malloc\n");
+		exit(1);
+	}
 	while (i < map_size.y_length)
 	{
 		map_info[i] = malloc(sizeof(t_map_info) * (map_size.x_length + 1));

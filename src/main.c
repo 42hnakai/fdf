@@ -6,7 +6,7 @@
 /*   By: hnakai <hnakai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 17:44:47 by hnakai            #+#    #+#             */
-/*   Updated: 2023/09/13 02:31:23 by hnakai           ###   ########.fr       */
+/*   Updated: 2023/09/13 16:20:44 by hnakai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if ((x < 0 || 1919 < x) || (y < 0 || 1079 < y))
+	if ((x < 0 || 1919 < x) || (y < 1 || 1079 < y))
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
